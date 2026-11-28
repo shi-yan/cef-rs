@@ -32557,6 +32557,17 @@ unsafe extern "C" {
     pub fn cef_is_rtl() -> ::std::os::raw::c_int;
 }
 unsafe extern "C" {
+    #[doc = "\n Returns a Windows-equivalent key code from CEF DOM code/key values, or zero\n for invalid or unmappable input. Named keys preserve their logical meaning,\n including remapped modifiers. Printable US characters use their logical key\n identity; other characters and dead keys fall back to physical position.\n Printable keypad keys retain their keypad key codes. Shift, Control and Alt\n use non-located codes; their side remains represented by |dom_code|. This\n stateless helper neither detects a layout nor generates insertion text.\n"]
+    pub fn cef_windows_key_code_from_dom_code_and_key(
+        dom_code: u32,
+        dom_key: u32,
+    ) -> ::std::os::raw::c_int;
+}
+unsafe extern "C" {
+    #[doc = "\n Returns the named or dead CEF DOM key for an X11/XKB keysym, or\n CEF_DOM_KEY_NONE for a printable or unrecognized keysym. The numeric keysym\n must use the X11/XKB namespace (including GTK GDK keyvals). This stateless\n helper never accesses a display or keyboard layout. The source framework\n must supply printable Unicode text, including non-BMP characters.\n"]
+    pub fn cef_non_printable_dom_key_from_xkeysym(keysym: u32) -> u32;
+}
+unsafe extern "C" {
     #[doc = "\n Add an entry to the cross-origin access whitelist.\n\n The same-origin policy restricts how scripts hosted from different origins\n (scheme + domain + port) can communicate. By default, scripts can only\n access resources with the same origin. Scripts hosted on the HTTP and HTTPS\n schemes (but no other schemes) can use the \"Access-Control-Allow-Origin\"\n header to allow cross-origin requests. For example,\n https://source.example.com can make XMLHttpRequest requests on\n http://target.example.com if the http://target.example.com request returns\n an \"Access-Control-Allow-Origin: https://source.example.com\" response\n header.\n\n Scripts in separate frames or iframes and hosted from the same protocol and\n domain suffix can execute cross-origin JavaScript if both pages set the\n document.domain value to the same domain suffix. For example,\n scheme://foo.example.com and scheme://bar.example.com can communicate using\n JavaScript if both domains set document.domain=\"example.com\".\n\n This function is used to allow access to origins that would otherwise\n violate the same-origin policy. Scripts hosted underneath the fully\n qualified |source_origin| URL (like http://www.example.com) will be allowed\n access to all resources hosted on the specified |target_protocol| and\n |target_domain|. If |target_domain| is non-NULL and\n |allow_target_subdomains| is false (0) only exact domain matches will be\n allowed. If |target_domain| contains a top- level domain component (like\n \"example.com\") and |allow_target_subdomains| is true (1) sub-domain matches\n will be allowed. If |target_domain| is NULL and |allow_target_subdomains| if\n true (1) all domains and IP addresses will be allowed.\n\n This function cannot be used to bypass the restrictions on local or display\n isolated schemes. See the comments on CefRegisterCustomScheme for more\n information.\n\n This function may be called on any thread. Returns false (0) if\n |source_origin| is invalid or the whitelist cannot be accessed.\n"]
     pub fn cef_add_cross_origin_whitelist_entry(
         source_origin: *const cef_string_t,

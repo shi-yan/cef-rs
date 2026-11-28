@@ -3945,9 +3945,18 @@ impl<'a> From<&'a syn::File> for ParseTree<'a> {
 }
 
 fn format_bindings(source_path: &Path) -> crate::Result<()> {
-    let mut cmd = Command::new(env!("CARGO"));
-    cmd.args(["fmt", "--", &source_path.display().to_string()]);
-    cmd.output()?;
+    let mut cmd = Command::new("rustfmt");
+    cmd.args([
+        "--edition",
+        "2021",
+        "--config",
+        "skip_children=true",
+        &source_path.display().to_string(),
+    ]);
+    let output = cmd.output()?;
+    if !output.status.success() {
+        return Err(std::io::Error::other(String::from_utf8_lossy(&output.stderr)).into());
+    }
     Ok(())
 }
 

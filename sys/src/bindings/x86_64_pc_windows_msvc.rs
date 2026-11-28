@@ -37780,3 +37780,11 @@ pub enum cef_color_id_t {
     CEF_ChromeColorsEnd = 1672,
     CEF_UiColorsLast = 65535,
 }
+
+unsafe extern "C" {
+    #[doc = "\n Returns a Windows-equivalent key code from CEF DOM code/key values, or zero\n for invalid or unmappable input. Named keys preserve their logical meaning,\n including remapped modifiers. Printable US characters use their logical key\n identity; other characters and dead keys fall back to physical position.\n Printable keypad keys retain their keypad key codes. Shift, Control and Alt\n use non-located codes; their side remains represented by |dom_code|. This\n stateless helper neither detects a layout nor generates insertion text.\n"]
+    pub fn cef_windows_key_code_from_dom_code_and_key(
+        dom_code: u32,
+        dom_key: u32,
+    ) -> ::std::os::raw::c_int;
+}

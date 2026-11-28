@@ -27256,3 +27256,15 @@ pub fn window_create_top_level(delegate: Option<&mut WindowDelegate>) -> Option<
         }
     }
 }
+
+/// See [`cef_windows_key_code_from_dom_code_and_key`] for more documentation.
+pub fn windows_key_code_from_dom_code_and_key(
+    dom_code: u32,
+    dom_key: u32,
+) -> ::std::os::raw::c_int {
+    unsafe {
+        let (arg_dom_code, arg_dom_key) = (dom_code, dom_key);
+        let result = cef_windows_key_code_from_dom_code_and_key(arg_dom_code, arg_dom_key);
+        result.wrap_result()
+    }
+}

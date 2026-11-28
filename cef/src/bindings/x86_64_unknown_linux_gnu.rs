@@ -15602,7 +15602,7 @@ pub trait ImplMenuModel: Clone + Sized + Rc {
     ) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::set_visible_at`] for more documentation."]
     fn set_visible_at(&self, index: usize, visible: ::std::os::raw::c_int)
-    -> ::std::os::raw::c_int;
+        -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::is_enabled`] for more documentation."]
     fn is_enabled(&self, command_id: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::is_enabled_at`] for more documentation."]
@@ -15615,7 +15615,7 @@ pub trait ImplMenuModel: Clone + Sized + Rc {
     ) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::set_enabled_at`] for more documentation."]
     fn set_enabled_at(&self, index: usize, enabled: ::std::os::raw::c_int)
-    -> ::std::os::raw::c_int;
+        -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::is_checked`] for more documentation."]
     fn is_checked(&self, command_id: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::is_checked_at`] for more documentation."]
@@ -15628,7 +15628,7 @@ pub trait ImplMenuModel: Clone + Sized + Rc {
     ) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::set_checked_at`] for more documentation."]
     fn set_checked_at(&self, index: usize, checked: ::std::os::raw::c_int)
-    -> ::std::os::raw::c_int;
+        -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::has_accelerator`] for more documentation."]
     fn has_accelerator(&self, command_id: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
     #[doc = "See [`_cef_menu_model_t::has_accelerator_at`] for more documentation."]
@@ -61257,6 +61257,27 @@ pub fn load_crlsets_file(path: Option<&CefString>) {
 pub fn is_rtl() -> ::std::os::raw::c_int {
     unsafe {
         let result = cef_is_rtl();
+        result.wrap_result()
+    }
+}
+
+/// See [`cef_windows_key_code_from_dom_code_and_key`] for more documentation.
+pub fn windows_key_code_from_dom_code_and_key(
+    dom_code: u32,
+    dom_key: u32,
+) -> ::std::os::raw::c_int {
+    unsafe {
+        let (arg_dom_code, arg_dom_key) = (dom_code, dom_key);
+        let result = cef_windows_key_code_from_dom_code_and_key(arg_dom_code, arg_dom_key);
+        result.wrap_result()
+    }
+}
+
+/// See [`cef_non_printable_dom_key_from_xkeysym`] for more documentation.
+pub fn non_printable_dom_key_from_xkeysym(keysym: u32) -> u32 {
+    unsafe {
+        let arg_keysym = keysym;
+        let result = cef_non_printable_dom_key_from_xkeysym(arg_keysym);
         result.wrap_result()
     }
 }
